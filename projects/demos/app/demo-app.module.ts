@@ -15,10 +15,10 @@ import { DemoModule as DefaultDemoModule } from './demo-modules/kitchen-sink/mod
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
-import { CarbonAdComponent } from './carbon-ad/carbon-ad.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [DemoAppComponent, CarbonAdComponent],
+  declarations: [DemoAppComponent, LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

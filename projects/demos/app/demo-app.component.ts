@@ -90,7 +90,6 @@ export class DemoAppComponent implements OnInit {
   @ViewChild('nav') nav: NgbNav;
   demos: Demo[] = [];
   filteredDemos: Demo[] = [];
-  activeDemo: Demo;
   isMenuVisible = false;
   firstDemoLoaded = false;
   searchText = '';
@@ -134,15 +133,7 @@ export class DemoAppComponent implements OnInit {
           }
           return event;
         })
-      )
-      .subscribe((event: NavigationStart) => {
-        this.activeDemo = this.demos.find(
-          (demo) => `/${demo.path}` === event.url
-        );
-        getSources(this.activeDemo.path).then((sources) => {
-          this.activeDemo.sources = sources;
-        });
-      });
+      );
 
     const script = document.createElement('script');
     script.async = true;

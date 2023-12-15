@@ -1,5 +1,3 @@
-<a>Proyecto Final - Calendario de Noah Castillo</a>
-
 <!--Esto es importante-->
 <ng-template #loading>
   <div class="card">
@@ -20,44 +18,24 @@
       <!--Esto es importante-->
       <div class="card" *ngIf="firstDemoLoaded; else loading">
         <div class="card-header">
-          <div class="row">
-            <div class="col-md-6"><h3>{{ activeDemo.label }}</h3></div>
-          </div>
+          <div class="row"></div>
         </div>
         <!--Hasta aquí-->
 
         <div class="card-body">
           <ul ngbNav #nav="ngbNav" class="justify-content-start nav-tabs">
             <li ngbNavItem domId="demo">
-              <a ngbNavLink><i class="fas fa-fw fa-laptop"></i> Live demo</a>
               <ng-template ngbNavContent>
-                <div class="spacer-top"><router-outlet></router-outlet></div>
+                <div class="spacer-top">
+                  <!--Esto es lo que muestra el calendario-->
+                  <router-outlet></router-outlet>
+                </div>
               </ng-template>
-            </li>
-
-            <li ngbNavItem *ngFor="let source of activeDemo?.sources">
-              <ng-template ngbNavContent> </ng-template>
             </li>
           </ul>
           <div [ngbNavOutlet]="nav"></div>
         </div>
       </div>
-    </div>
-    <div class="fill-height sidebar-nav scroll-y">
-      <mwl-carbon-ad></mwl-carbon-ad>
-
-      <ul class="list-unstyled spacer-top">
-        <li *ngFor="let demo of filteredDemos">
-          <a
-            [routerLink]="[demo.path]"
-            [class.active]="activeDemo?.path === demo.path"
-            (click)="nav.select('demo')"
-          >
-            {{ demo.label }}
-          </a>
-        </li>
-      </ul>
-      <em *ngIf="filteredDemos.length === 0">No matching demos found</em>
     </div>
   </div>
 </div>

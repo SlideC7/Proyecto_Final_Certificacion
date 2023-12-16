@@ -1,41 +1,36 @@
-<!--Esto es importante-->
+<!-- Plantilla Principal de Carga -->
 <ng-template #loading>
-  <div class="card">
+  <section class="card">
     <div class="card-body text-center">
-      <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
-      Loading demo...
+      <i class="fas fa-spin fa-spinner fa-5x" aria-hidden="true"></i>
+      <p>Loading demo...</p>
     </div>
-  </div>
+  </section>
 </ng-template>
-<!--Hasta aquí-->
-
+<!-- Contenedor Principal del Contenido -->
 <div class="container-fluid main-content">
-  <div class="row fill-height">
-    <div
-      class="col fill-height scroll-y demo-container"
-      mwlDraggableScrollContainer
-    >
-      <!--Esto es importante-->
-      <div class="card" *ngIf="firstDemoLoaded; else loading">
-        <div class="card-header">
-          <div class="row"></div>
-        </div>
-        <!--Hasta aquí-->
-
-        <div class="card-body">
-          <ul ngbNav #nav="ngbNav" class="justify-content-start nav-tabs">
-            <li ngbNavItem domId="demo">
-              <ng-template ngbNavContent>
-                <div class="spacer-top">
-                  <!--Esto es lo que muestra el calendario-->
-                  <router-outlet></router-outlet>
-                </div>
-              </ng-template>
-            </li>
-          </ul>
-          <div [ngbNavOutlet]="nav"></div>
-        </div>
+  <div class="col fill-height scroll-y demo-container">
+    <!-- Tarjeta de Contenido Dinámico -->
+    <section class="card" *ngIf="firstDemoLoaded; else loading">
+      <header class="card-header">
+        <nav class="row">
+          <!-- Navegación y Otros Contenidos del Encabezado -->
+        </nav>
+      </header>
+      <div class="card-body">
+        <!-- Pestañas de Navegación -->
+        <ul ngbNav #nav="ngbNav" class="justify-content-start nav-tabs">
+          <li ngbNavItem domId="demo">
+            <ng-template ngbNavContent>
+              <div class="spacer-top">
+                <!-- Vista del Calendario -->
+                <router-outlet></router-outlet>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
       </div>
-    </div>
+    </section>
   </div>
 </div>

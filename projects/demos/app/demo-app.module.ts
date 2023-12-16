@@ -16,7 +16,6 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 import { LoginComponent } from './login/login.component';
-
 @NgModule({
   declarations: [DemoAppComponent, LoginComponent],
   imports: [
@@ -34,6 +33,11 @@ import { LoginComponent } from './login/login.component';
     DefaultDemoModule,
     RouterModule.forRoot(
       [
+        {
+          path: 'login',
+          component: LoginComponent,
+          data: { label: 'Login' },
+        },
         {
           path: 'kitchen-sink',
           component: DefaultDemoComponent,
@@ -419,17 +423,6 @@ import { LoginComponent } from './login/login.component';
           },
         },
         {
-          path: 'dark-theme',
-          loadChildren: () =>
-            import('./demo-modules/dark-theme/module').then(
-              (m) => m.DemoModule
-            ),
-          data: {
-            label: 'Dark theme',
-            darkTheme: true,
-          },
-        },
-        {
           path: 'week-view-event-margin',
           loadChildren: () =>
             import('./demo-modules/week-view-event-margin/module').then(
@@ -489,7 +482,7 @@ import { LoginComponent } from './login/login.component';
         },
         {
           path: '**',
-          redirectTo: 'kitchen-sink',
+          redirectTo: 'login',
         },
       ],
       {

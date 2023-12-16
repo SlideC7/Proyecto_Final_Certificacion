@@ -1,5 +1,5 @@
-<h2>Login</h2>
-<form (submit)="onSubmit()">
+<h2>Iniciar Sesión</h2>
+<form (submit)="onSubmit()" class="login-form">
   <div class="form-group">
     <label for="username">Usuario:</label>
     <input
@@ -21,6 +21,8 @@
       class="form-control"
       required
     />
+    <!-- Opción para mostrar/ocultar contraseña -->
   </div>
   <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+  <!-- Enlaces para recuperación de contraseña y registro -->
 </form>

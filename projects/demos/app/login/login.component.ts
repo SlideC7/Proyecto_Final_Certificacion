@@ -14,7 +14,6 @@ export class LoginComponent {
 
   onSubmit() {
     // Aquí deberías verificar las credenciales ingresadas
-    // y autenticar al usuario. Por ahora, simplemente redireccionaremos al dashboard.
     this.router.navigate(['/kitchen-sink']);
   }
 }

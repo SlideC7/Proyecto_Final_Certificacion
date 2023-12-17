@@ -7,13 +7,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
+  nombreUsuario: string = '';
+  contrasena: string = '';
+  mensajeError: string = '';
 
   constructor(private router: Router) {}
 
   onSubmit() {
-    // Aquí deberías verificar las credenciales ingresadas
-    this.router.navigate(['/kitchen-sink']);
+    if (
+      this.nombreUsuario === 'usuarioCorrecto' &&
+      this.contrasena === 'contraseñaCorrecta'
+    ) {
+      this.router.navigate(['/kitchen-sink']);
+    } else {
+      this.mensajeError = 'Usuario o contraseña incorrectos';
+      this.contrasena = ''; // Resetear la contraseña
+    }
   }
 }

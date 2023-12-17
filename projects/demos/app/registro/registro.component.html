@@ -1,0 +1,33 @@
+<h2>Registro</h2>
+<form (submit)="onSubmit()" class="formulario-registro">
+  <!-- Mensaje de error, si decides agregar uno -->
+  <!-- <div *ngIf="mensajeError" class="alert alert-danger">
+    {{ mensajeError }}
+  </div> -->
+
+  <div class="form-group">
+    <label for="nombreUsuario">Nombre de Usuario:</label>
+    <input
+      type="text"
+      id="nombreUsuario"
+      [(ngModel)]="nombreUsuario"
+      name="nombreUsuario"
+      class="form-control"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="contrasena">Contraseña:</label>
+    <input
+      type="password"
+      id="contrasena"
+      [(ngModel)]="contrasena"
+      name="contrasena"
+      class="form-control"
+      required
+    />
+  </div>
+
+  <button type="submit" class="btn btn-success">Registrarse</button>
+</form>

@@ -8,27 +8,18 @@
   </section>
 </ng-template>
 <!-- Contenedor Principal del Contenido -->
-<div class="container-fluid main-content">
-  <div class="col fill-height scroll-y demo-container">
-    <!-- Tarjeta de Contenido Dinámico -->
-    <header class="card-header">
-      <nav class="row">
-        <!-- Navegación y Otros Contenidos del Encabezado -->
-      </nav>
-    </header>
-    <div class="card-body">
-      <!-- Pestañas de Navegación -->
-      <ul ngbNav #nav="ngbNav" class="justify-content-start nav-tabs">
-        <li ngbNavItem domId="demo">
-          <ng-template ngbNavContent>
-            <div class="spacer-top">
-              <!-- Vista del Calendario -->
-              <router-outlet></router-outlet>
-            </div>
-          </ng-template>
-        </li>
-      </ul>
-      <div [ngbNavOutlet]="nav"></div>
-    </div>
-  </div>
+
+<div class="card-body">
+  <!-- Pestañas de Navegación -->
+  <ul ngbNav #nav="ngbNav" class="justify-content-start nav-tabs">
+    <li ngbNavItem domId="demo">
+      <ng-template ngbNavContent>
+        <div class="spacer-top">
+          <!-- Vista del Calendario -->
+          <router-outlet></router-outlet>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav"></div>
 </div>

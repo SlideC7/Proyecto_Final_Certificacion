@@ -1,4 +1,4 @@
-.formulario-login {
+.formulario-registro {
   max-width: 400px;
   margin: auto;
   padding: 20px;
@@ -18,48 +18,42 @@
     label {
       color: #555;
       font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
     }
 
     input {
+      width: 100%;
       border-radius: 4px;
       border: 1px solid #ddd;
       padding: 8px 12px;
 
       &:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 3px rgb(0 123 255 / 25%);
+        border-color: #28a745;
+        box-shadow: 0 0 0 3px rgb(40 167 69 / 25%);
       }
     }
   }
 
-  .btn-primary {
+  .btn-success {
     width: 100%;
     padding: 10px;
     border-radius: 4px;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #28a745;
+    border-color: #28a745;
 
     &:hover {
-      background-color: #0056b3;
-      border-color: #004085;
+      background-color: #218838;
+      border-color: #1e7e34;
     }
   }
 
-  .alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-  }
+  /* Descomenta esto si decides agregar mensajes de error */
 
-  a {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    color: #007bff;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  /* .alert-danger {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      margin-bottom: 15px;
+    } */
 }

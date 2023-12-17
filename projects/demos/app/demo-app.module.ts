@@ -16,8 +16,9 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
 @NgModule({
-  declarations: [DemoAppComponent, LoginComponent],
+  declarations: [DemoAppComponent, LoginComponent, RegistroComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -37,6 +38,11 @@ import { LoginComponent } from './login/login.component';
           path: 'login',
           component: LoginComponent,
           data: { label: 'Login' },
+        },
+        {
+          path: 'registro',
+          component: RegistroComponent,
+          data: { label: 'Registro' },
         },
         {
           path: 'kitchen-sink',

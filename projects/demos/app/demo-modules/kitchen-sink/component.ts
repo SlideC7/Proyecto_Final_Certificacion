@@ -44,6 +44,10 @@ const colors: Record<string, EventColor> = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
+      .scroll-y {
+        overflow-y: scroll; /* Habilita el scroll vertical */
+        height: 700px; /* Ajusta la altura según tus necesidades */
+      }
       h3 {
         margin: 0 0 10px;
       }

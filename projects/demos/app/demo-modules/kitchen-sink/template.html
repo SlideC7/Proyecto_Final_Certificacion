@@ -104,6 +104,17 @@
       <div class="clearfix"></div>
     </h3>
 
+    <!-- Encima de la tabla de eventos -->
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="searchTerm"
+        (keyup)="searchEvents()"
+        placeholder="Buscar eventos..."
+      />
+    </div>
+
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>

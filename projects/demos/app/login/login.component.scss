@@ -1,65 +1,67 @@
+/* Estilo para el formulario */
 .formulario-login {
   max-width: 400px;
-  margin: auto;
+  margin: 0 auto;
   padding: 20px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+}
 
-  h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
+.formulario-login h2 {
+  margin-top: 20px; /* Espacio superior para separarlo del mensaje de error */
+  text-align: center; /* Centra el contenido horizontalmente */
+}
 
-  .form-group {
-    margin-bottom: 15px;
+/* Estilo para el mensaje de error */
+.alert.alert-danger {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #f00;
+  background-color: #ffe6e6;
+  color: #f00;
+  border-radius: 5px;
+}
 
-    label {
-      color: #555;
-      font-weight: bold;
-    }
+/* Estilo para los campos de entrada */
+.form-group {
+  margin-bottom: 15px;
+}
 
-    input {
-      border-radius: 4px;
-      border: 1px solid #ddd;
-      padding: 8px 12px;
+label {
+  font-weight: bold;
+}
 
-      &:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 3px rgb(0 123 255 / 25%);
-      }
-    }
-  }
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
 
-  .btn-primary {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #007bff;
-    border-color: #007bff;
+/* Estilo para el botón de inicio de sesión */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
 
-    &:hover {
-      background-color: #0056b3;
-      border-color: #004085;
-    }
-  }
+.btn-primary:hover {
+  background-color: #0056b3;
+}
 
-  .alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-  }
+/* Estilo para el enlace de registro */
+a {
+  text-decoration: none;
+  color: #007bff;
+}
 
-  a {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    color: #007bff;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+a:hover {
+  text-decoration: underline;
 }

@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from 'bcryptjs'; // Importa bcryptjs
 
 interface Usuario {
+  id: string;
   nombreUsuario: string;
-  contraseña: string;
+  hashContrasena: string;
+  salt: string;
 }
 
 @Injectable({
@@ -14,14 +18,35 @@ export class AutenticacionService {
   constructor() {}
 
   registrarUsuario(nombreUsuario: string, contraseña: string): void {
-    this.usuarios.push({ nombreUsuario, contraseña });
+    const saltRounds = 10; // Número de rondas de sal para bcrypt
+
+    // Genera un salt único para este usuario
+    const salt = uuidv4();
+
+    // Hashea la contraseña con bcrypt
+    const hashContrasena = bcrypt.hashSync(contraseña, saltRounds);
+
+    // Crea un nuevo usuario y almacénalo en la lista de usuarios
+    const nuevoUsuario: Usuario = {
+      id: uuidv4(),
+      nombreUsuario,
+      hashContrasena,
+      salt,
+    };
+
+    this.usuarios.push(nuevoUsuario);
   }
 
   autenticar(nombreUsuario: string, contraseña: string): boolean {
-    return this.usuarios.some(
-      (usuario) =>
-        usuario.nombreUsuario === nombreUsuario &&
-        usuario.contraseña === contraseña
+    const usuario = this.usuarios.find(
+      (u) => u.nombreUsuario === nombreUsuario
     );
+
+    if (!usuario) {
+      return false; // El usuario no existe
+    }
+
+    // Verifica si la contraseña proporcionada coincide con el hash almacenado utilizando bcrypt
+    return bcrypt.compareSync(contraseña, usuario.hashContrasena);
   }
 }

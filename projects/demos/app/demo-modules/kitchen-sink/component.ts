@@ -61,6 +61,10 @@ const colors: Record<string, EventColor> = {
   templateUrl: 'template.html',
 })
 export class DemoComponent {
+  // Agrega aquí las nuevas propiedades
+  searchTerm: string = '';
+  filteredEvents: CalendarEvent[] = [];
+
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
@@ -137,7 +141,9 @@ export class DemoComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal) {
+    this.filteredEvents = this.events; // Inicializa con todos los eventos
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -203,5 +209,15 @@ export class DemoComponent {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  searchEvents(): void {
+    if (!this.searchTerm) {
+      this.filteredEvents = this.events;
+    } else {
+      this.filteredEvents = this.events.filter((event) =>
+        event.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
   }
 }

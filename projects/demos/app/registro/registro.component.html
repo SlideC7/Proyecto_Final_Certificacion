@@ -1,9 +1,14 @@
-<h2>Registro</h2>
 <form (submit)="onSubmit()" class="formulario-registro">
   <!-- Mensaje de error, si decides agregar uno -->
   <!-- <div *ngIf="mensajeError" class="alert alert-danger">
     {{ mensajeError }}
   </div> -->
+  <!-- Flecha para volver a iniciar sesión -->
+  <a [routerLink]="'/login'" class="volver-login">
+    <i class="fas fa-arrow-left"></i>
+  </a>
+
+  <h2>Registro</h2>
 
   <div class="form-group">
     <label for="nombreUsuario">Nombre de Usuario:</label>

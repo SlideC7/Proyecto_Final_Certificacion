@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM node:latest AS build
+FROM node:16 AS build
 
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /app

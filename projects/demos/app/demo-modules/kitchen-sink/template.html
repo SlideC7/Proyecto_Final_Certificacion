@@ -1,4 +1,13 @@
 <div class="container-fluid main-content">
+  <div class="row">
+    <!-- Botón de Cerrar Sesión -->
+    <div class="col" style="text-align: right">
+      <button class="btn btn-danger" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </button>
+    </div>
+  </div>
+  <br />
   <div class="col fill-height scroll-y demo-container">
     <div class="row text-center">
       <div class="col-md-4">
@@ -31,7 +40,9 @@
         </div>
       </div>
       <div class="col-md-4">
-        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        <h3>
+          {{ viewDate | calendarDate:(view + 'ViewTitle'):'es' | uppercase }}
+        </h3>
       </div>
       <div class="col-md-4">
         <div class="btn-group">
@@ -104,13 +115,13 @@
       <div class="clearfix"></div>
     </h3>
 
-    <!-- Encima de la tabla de eventos -->
+    <!-- Buscar Eventos -->
     <div class="form-group">
       <input
         type="text"
         class="form-control"
         [(ngModel)]="searchTerm"
-        (keyup)="searchEvents()"
+        (keyup)="buscarEventos()"
         placeholder="Buscar eventos..."
       />
     </div>
@@ -206,96 +217,6 @@
         </h5>
         <button type="button" class="close" (click)="close()">
           <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div *ngIf="modalData.action === 'Edited'">
-          <!-- Formulario de Edición -->
-          <form>
-            <!-- Título del Evento -->
-            <div class="form-group">
-              <label for="eventTitle">Título del Evento:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="eventTitle"
-                [(ngModel)]="modalData.event.title"
-              />
-            </div>
-
-            <!-- Color Primario -->
-            <div class="form-group">
-              <label for="primaryColor">Color Primario:</label>
-              <input
-                type="color"
-                class="form-control"
-                id="primaryColor"
-                [(ngModel)]="modalData.event.color.primary"
-              />
-            </div>
-
-            <!-- Color Secundario -->
-            <div class="form-group">
-              <label for="secondaryColor">Color Secundario:</label>
-              <input
-                type="color"
-                class="form-control"
-                id="secondaryColor"
-                [(ngModel)]="modalData.event.color.secondary"
-              />
-            </div>
-
-            <!-- Fecha de Inicio -->
-            <div class="form-group">
-              <label for="startDate">Fecha de Inicio:</label>
-              <input
-                class="form-control"
-                type="text"
-                id="startDate"
-                mwlFlatpickr
-                [(ngModel)]="modalData.event.start"
-                [altInput]="true"
-                [convertModelValue]="true"
-                [enableTime]="true"
-                dateFormat="Y-m-dTH:i"
-                altFormat="F j, Y H:i"
-              />
-            </div>
-
-            <!-- Fecha de Fin -->
-            <div class="form-group">
-              <label for="endDate">Fecha de Fin:</label>
-              <input
-                class="form-control"
-                type="text"
-                id="endDate"
-                mwlFlatpickr
-                [(ngModel)]="modalData.event.end"
-                [altInput]="true"
-                [convertModelValue]="true"
-                [enableTime]="true"
-                dateFormat="Y-m-dTH:i"
-                altFormat="F j, Y H:i"
-              />
-            </div>
-          </form>
-        </div>
-        <div *ngIf="modalData.action !== 'Edited'">
-          <!-- Contenido para otras acciones -->
-          <pre>{{ modalData?.event | json }}</pre>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="close()">
-          Cerrar
-        </button>
-        <button
-          *ngIf="modalData.action === 'Edited'"
-          type="button"
-          class="btn btn-primary"
-          (click)="saveEventChanges()"
-        >
-          Guardar Cambios
         </button>
       </div>
     </ng-template>

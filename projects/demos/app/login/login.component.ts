@@ -31,7 +31,6 @@ export class LoginComponent {
       this.router.navigate(['/kitchen-sink']);
     } else {
       this.mensajeError = 'Usuario o contraseña incorrectos';
-      this.contrasena = ''; // Resetear la contraseña
     }
   }
 }

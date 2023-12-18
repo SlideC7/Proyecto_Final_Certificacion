@@ -24,6 +24,7 @@ import {
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -47,7 +48,7 @@ const colors: Record<string, EventColor> = {
     `
       .scroll-y {
         overflow-y: scroll; /* Habilita el scroll vertical */
-        height: 700px; /* Ajusta la altura según tus necesidades */
+        height: 650px;
       }
       h3 {
         margin: 0 0 10px;
@@ -62,10 +63,14 @@ const colors: Record<string, EventColor> = {
   templateUrl: 'template.html',
 })
 export class DemoComponent {
-  // Agrega aquí las nuevas propiedades
+  //Buscar
   searchTerm: string = '';
   filteredTableEvents: CalendarEvent[] = [];
-
+  //router: any;
+  //Enlace para salir
+  logout(): void {
+    this.router.navigate(['/login']);
+  }
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
@@ -79,33 +84,14 @@ export class DemoComponent {
     event: CalendarEvent;
   };
 
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      title: 'Un evento de 3 días',
       color: { ...colors.red },
-      actions: this.actions,
       allDay: true,
       resizable: {
         beforeStart: true,
@@ -115,23 +101,21 @@ export class DemoComponent {
     },
     {
       start: startOfDay(new Date()),
-      title: 'An event with no end date',
+      title: 'Un evento sin fecha de fin',
       color: { ...colors.yellow },
-      actions: this.actions,
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
+      title: 'Un evento que dura 2 meses',
       color: { ...colors.blue },
       allDay: true,
     },
     {
       start: addHours(startOfDay(new Date()), 2),
       end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
+      title: 'Otro ',
       color: { ...colors.yellow },
-      actions: this.actions,
       resizable: {
         beforeStart: true,
         afterEnd: true,
@@ -142,7 +126,11 @@ export class DemoComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal, private cdr: ChangeDetectorRef) {
+  constructor(
+    private modal: NgbModal,
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) {
     this.filteredTableEvents = this.events; // Inicializa con todos los eventos
   }
 
@@ -175,35 +163,17 @@ export class DemoComponent {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    if (action === 'Edited') {
-      // Abre el modal para edición
-      this.modal.open(this.modalContent, { size: 'lg' });
-    }
-  }
-
-  saveEventChanges(): void {
-    // Encuentra y actualiza el evento en la lista de eventos
-    const index = this.events.findIndex((e) => e === this.modalData.event);
-    if (index > -1) {
-      this.events[index] = { ...this.modalData.event };
-    }
-    // Actualiza la lista de eventos con los cambios
-    this.refresh.next(); // Notifica al calendario de los cambios
-    this.modal.dismissAll(); // Cierra el modal
-    this.cdr.detectChanges(); // Actualiza la vista
-    this.searchEvents();
   }
 
   addEvent(): void {
     this.events = [
       ...this.events,
       {
-        title: 'New event',
+        title: '',
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
         color: colors.red,
@@ -212,10 +182,9 @@ export class DemoComponent {
           beforeStart: true,
           afterEnd: true,
         },
-        actions: this.actions, // Asegúrate de agregar esto
       },
     ];
-    this.searchEvents();
+    this.buscarEventos();
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -224,7 +193,7 @@ export class DemoComponent {
     // También actualiza la lista de eventos filtrados para la tabla
     console.log(this.filteredTableEvents);
     console.log(this.events);
-    this.searchEvents();
+    this.buscarEventos();
   }
 
   setView(view: CalendarView) {
@@ -235,11 +204,17 @@ export class DemoComponent {
     this.activeDayIsOpen = false;
   }
 
-  searchEvents(): void {
+  /**
+   * Función para buscar eventos basada en un término de búsqueda.
+   */
+  buscarEventos(): void {
+    // Si no hay un término de búsqueda, asigna todos los eventos a filteredTableEvents
     if (!this.searchTerm) {
       this.filteredTableEvents = [...this.events];
     } else {
+      // Si hay un término de búsqueda, filtra los eventos que contienen ese término en su título
       this.filteredTableEvents = this.events.filter((event) =>
+        // Convierte el título del evento y el término de búsqueda a minúsculas para la comparación
         event.title.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }

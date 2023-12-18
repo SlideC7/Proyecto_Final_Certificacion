@@ -6,7 +6,6 @@ interface Usuario {
   id: string;
   nombreUsuario: string;
   hashContrasena: string;
-  salt: string;
 }
 
 @Injectable({
@@ -20,10 +19,7 @@ export class AutenticacionService {
   registrarUsuario(nombreUsuario: string, contraseña: string): void {
     const saltRounds = 10; // Número de rondas de sal para bcrypt
 
-    // Genera un salt único para este usuario
-    const salt = uuidv4();
-
-    // Hashea la contraseña con bcrypt
+    // Hashea la contraseña con bcrypt (bcrypt generará su propio salt)
     const hashContrasena = bcrypt.hashSync(contraseña, saltRounds);
 
     // Crea un nuevo usuario y almacénalo en la lista de usuarios
@@ -31,7 +27,6 @@ export class AutenticacionService {
       id: uuidv4(),
       nombreUsuario,
       hashContrasena,
-      salt,
     };
 
     this.usuarios.push(nuevoUsuario);

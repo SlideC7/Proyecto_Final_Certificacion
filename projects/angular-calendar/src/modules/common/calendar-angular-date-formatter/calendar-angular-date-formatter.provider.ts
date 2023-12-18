@@ -19,28 +19,37 @@ export class CalendarAngularDateFormatter
   /**
    * The month view header week day labels
    */
-  public monthViewColumnHeader({ date, locale }: DateFormatterParams): string {
+  public monthViewColumnHeader({
+    date,
+    locale = 'es',
+  }: DateFormatterParams): string {
     return formatDate(date, 'EEEE', locale);
   }
 
   /**
    * The month view cell day number
    */
-  public monthViewDayNumber({ date, locale }: DateFormatterParams): string {
+  public monthViewDayNumber({
+    date,
+    locale = 'es',
+  }: DateFormatterParams): string {
     return formatDate(date, 'd', locale);
   }
 
   /**
    * The month view title
    */
-  public monthViewTitle({ date, locale }: DateFormatterParams): string {
+  public monthViewTitle({ date, locale = 'es' }: DateFormatterParams): string {
     return formatDate(date, 'LLLL y', locale);
   }
 
   /**
    * The week view header week day labels
    */
-  public weekViewColumnHeader({ date, locale }: DateFormatterParams): string {
+  public weekViewColumnHeader({
+    date,
+    locale = 'es',
+  }: DateFormatterParams): string {
     return formatDate(date, 'EEEE', locale);
   }
 
@@ -49,7 +58,7 @@ export class CalendarAngularDateFormatter
    */
   public weekViewColumnSubHeader({
     date,
-    locale,
+    locale = 'es',
   }: DateFormatterParams): string {
     return formatDate(date, 'MMM d', locale);
   }
@@ -72,7 +81,11 @@ export class CalendarAngularDateFormatter
       daysInWeek
     );
     const format = (dateToFormat: Date, showYear: boolean) =>
-      formatDate(dateToFormat, 'MMM d' + (showYear ? ', yyyy' : ''), locale);
+      formatDate(
+        dateToFormat,
+        'MMM d' + (showYear ? ', yyyy' : ''),
+        (locale = 'es')
+      );
     return `${format(
       viewStart,
       viewStart.getUTCFullYear() !== viewEnd.getUTCFullYear()
@@ -96,7 +109,7 @@ export class CalendarAngularDateFormatter
   /**
    * The day view title
    */
-  public dayViewTitle({ date, locale }: DateFormatterParams): string {
+  public dayViewTitle({ date, locale = 'es' }: DateFormatterParams): string {
     return formatDate(date, 'EEEE, MMMM d, y', locale);
   }
 }

@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
+
 @NgModule({
   declarations: [DemoAppComponent, LoginComponent, RegistroComponent],
   imports: [

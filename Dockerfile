@@ -1,21 +1,32 @@
 # Etapa de construcción
 FROM node:latest AS build
+
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
+
+# Copia los archivos de definición de paquetes y los instala
 COPY package.json package-lock.json ./
 RUN npm install --force
-RUN npm audit fix --force
 
-# Asegúrate de copiar los archivos necesarios al directorio de trabajo
-# Aquí, cambia el contexto de copia al subdirectorio donde se encuentra tu aplicación Angular
-COPY projects/demos/ ./demos/
-WORKDIR /app/demos
+# Copia el proyecto Angular al directorio de trabajo
+COPY . .
 
 # Construye la aplicación Angular
+# Ajusta la ruta si tu comando de construcción es diferente
 RUN npm run build
 
 # Etapa del servidor Nginx para servir la aplicación
 FROM nginx:alpine
-# Ajusta la ruta de donde copiar los archivos construidos
-COPY --from=build /app/demos/dist/demos /usr/share/nginx/html
+
+# Copia los archivos construidos desde la etapa de construcción a la carpeta de Nginx
+# Ajusta la ruta de origen según dónde se encuentre tu carpeta de distribución después de la construcción
+COPY --from=build /app/dist/demos /usr/share/nginx/html
+
+# Expone el puerto 80
 EXPOSE 80
+
+# Comando para ejecutar Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
+
+

@@ -1,4 +1,4 @@
-FROM node:20 AS build
+FROM node:latest AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --force
@@ -7,6 +7,6 @@ COPY . ./
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=build /app/dist/Proyecto_Final_Certificacion /usr/share/nginx/html
+COPY --from=build /app/dist/demos /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

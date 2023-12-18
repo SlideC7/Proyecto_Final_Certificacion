@@ -10,14 +10,14 @@
             [(viewDate)]="viewDate"
             (viewDateChange)="closeOpenMonthViewDay()"
           >
-            Previous
+            <i class="fas fa-arrow-left"></i>
           </div>
           <div
             class="btn btn-outline-secondary"
             mwlCalendarToday
             [(viewDate)]="viewDate"
           >
-            Today
+            Hoy
           </div>
           <div
             class="btn btn-primary"
@@ -26,7 +26,7 @@
             [(viewDate)]="viewDate"
             (viewDateChange)="closeOpenMonthViewDay()"
           >
-            Next
+            <i class="fas fa-arrow-right"></i>
           </div>
         </div>
       </div>
@@ -40,21 +40,21 @@
             (click)="setView(CalendarView.Month)"
             [class.active]="view === CalendarView.Month"
           >
-            Month
+            Mes
           </div>
           <div
             class="btn btn-primary"
             (click)="setView(CalendarView.Week)"
             [class.active]="view === CalendarView.Week"
           >
-            Week
+            Semana
           </div>
           <div
             class="btn btn-primary"
             (click)="setView(CalendarView.Day)"
             [class.active]="view === CalendarView.Day"
           >
-            Day
+            Día
           </div>
         </div>
       </div>
@@ -114,22 +114,22 @@
         placeholder="Buscar eventos..."
       />
     </div>
-
+    <br />
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
           <tr>
             <th>Título</th>
-            <th>Primary color</th>
-            <th>Secondary + text color</th>
-            <th>Starts at</th>
-            <th>Ends at</th>
+            <th>Color Primario</th>
+            <th>Color Secundario</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Fin</th>
             <th>Borrar</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr *ngFor="let event of events">
+          <tr *ngFor="let event of filteredTableEvents">
             <td>
               <input
                 type="text"
@@ -190,7 +190,7 @@
             </td>
             <td>
               <button class="btn btn-danger" (click)="deleteEvent(event)">
-                Borrar
+                <i class="fas fa-fw fa-trash-alt"></i>
               </button>
             </td>
           </tr>
@@ -200,28 +200,102 @@
 
     <ng-template #modalContent let-close="close">
       <div class="modal-header">
-        <h5 class="modal-title">Event action occurred</h5>
+        <h5 class="modal-title">
+          {{ modalData.action === 'Edited' ? 'Editar Evento' : 'Información del
+          Evento' }}
+        </h5>
         <button type="button" class="close" (click)="close()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div>
-          Action:
-          <pre>{{ modalData?.action }}</pre>
+        <div *ngIf="modalData.action === 'Edited'">
+          <!-- Formulario de Edición -->
+          <form>
+            <!-- Título del Evento -->
+            <div class="form-group">
+              <label for="eventTitle">Título del Evento:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="eventTitle"
+                [(ngModel)]="modalData.event.title"
+              />
+            </div>
+
+            <!-- Color Primario -->
+            <div class="form-group">
+              <label for="primaryColor">Color Primario:</label>
+              <input
+                type="color"
+                class="form-control"
+                id="primaryColor"
+                [(ngModel)]="modalData.event.color.primary"
+              />
+            </div>
+
+            <!-- Color Secundario -->
+            <div class="form-group">
+              <label for="secondaryColor">Color Secundario:</label>
+              <input
+                type="color"
+                class="form-control"
+                id="secondaryColor"
+                [(ngModel)]="modalData.event.color.secondary"
+              />
+            </div>
+
+            <!-- Fecha de Inicio -->
+            <div class="form-group">
+              <label for="startDate">Fecha de Inicio:</label>
+              <input
+                class="form-control"
+                type="text"
+                id="startDate"
+                mwlFlatpickr
+                [(ngModel)]="modalData.event.start"
+                [altInput]="true"
+                [convertModelValue]="true"
+                [enableTime]="true"
+                dateFormat="Y-m-dTH:i"
+                altFormat="F j, Y H:i"
+              />
+            </div>
+
+            <!-- Fecha de Fin -->
+            <div class="form-group">
+              <label for="endDate">Fecha de Fin:</label>
+              <input
+                class="form-control"
+                type="text"
+                id="endDate"
+                mwlFlatpickr
+                [(ngModel)]="modalData.event.end"
+                [altInput]="true"
+                [convertModelValue]="true"
+                [enableTime]="true"
+                dateFormat="Y-m-dTH:i"
+                altFormat="F j, Y H:i"
+              />
+            </div>
+          </form>
         </div>
-        <div>
-          Event:
+        <div *ngIf="modalData.action !== 'Edited'">
+          <!-- Contenido para otras acciones -->
           <pre>{{ modalData?.event | json }}</pre>
         </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">
+          Cerrar
+        </button>
         <button
+          *ngIf="modalData.action === 'Edited'"
           type="button"
-          class="btn btn-outline-secondary"
-          (click)="close()"
+          class="btn btn-primary"
+          (click)="saveEventChanges()"
         >
-          OK
+          Guardar Cambios
         </button>
       </div>
     </ng-template>

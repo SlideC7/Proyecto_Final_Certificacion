@@ -23,6 +23,7 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { ChangeDetectorRef } from '@angular/core';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -63,7 +64,7 @@ const colors: Record<string, EventColor> = {
 export class DemoComponent {
   // Agrega aquí las nuevas propiedades
   searchTerm: string = '';
-  filteredEvents: CalendarEvent[] = [];
+  filteredTableEvents: CalendarEvent[] = [];
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
@@ -141,8 +142,8 @@ export class DemoComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {
-    this.filteredEvents = this.events; // Inicializa con todos los eventos
+  constructor(private modal: NgbModal, private cdr: ChangeDetectorRef) {
+    this.filteredTableEvents = this.events; // Inicializa con todos los eventos
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -179,7 +180,23 @@ export class DemoComponent {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    if (action === 'Edited') {
+      // Abre el modal para edición
+      this.modal.open(this.modalContent, { size: 'lg' });
+    }
+  }
+
+  saveEventChanges(): void {
+    // Encuentra y actualiza el evento en la lista de eventos
+    const index = this.events.findIndex((e) => e === this.modalData.event);
+    if (index > -1) {
+      this.events[index] = { ...this.modalData.event };
+    }
+    // Actualiza la lista de eventos con los cambios
+    this.refresh.next(); // Notifica al calendario de los cambios
+    this.modal.dismissAll(); // Cierra el modal
+    this.cdr.detectChanges(); // Actualiza la vista
+    this.searchEvents();
   }
 
   addEvent(): void {
@@ -195,12 +212,19 @@ export class DemoComponent {
           beforeStart: true,
           afterEnd: true,
         },
+        actions: this.actions, // Asegúrate de agregar esto
       },
     ];
+    this.searchEvents();
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
+
+    // También actualiza la lista de eventos filtrados para la tabla
+    console.log(this.filteredTableEvents);
+    console.log(this.events);
+    this.searchEvents();
   }
 
   setView(view: CalendarView) {
@@ -213,9 +237,9 @@ export class DemoComponent {
 
   searchEvents(): void {
     if (!this.searchTerm) {
-      this.filteredEvents = this.events;
+      this.filteredTableEvents = [...this.events];
     } else {
-      this.filteredEvents = this.events.filter((event) =>
+      this.filteredTableEvents = this.events.filter((event) =>
         event.title.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }

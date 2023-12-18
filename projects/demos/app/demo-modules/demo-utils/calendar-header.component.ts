@@ -14,7 +14,7 @@ import { CalendarView } from 'angular-calendar';
             [(viewDate)]="viewDate"
             (viewDateChange)="viewDateChange.next(viewDate)"
           >
-            Previous
+            <i class="fas fa-arrow-left"></i>
           </div>
           <div
             class="btn btn-outline-secondary"
@@ -22,7 +22,7 @@ import { CalendarView } from 'angular-calendar';
             [(viewDate)]="viewDate"
             (viewDateChange)="viewDateChange.next(viewDate)"
           >
-            Today
+            Hoy
           </div>
           <div
             class="btn btn-primary"
@@ -36,7 +36,7 @@ import { CalendarView } from 'angular-calendar';
         </div>
       </div>
       <div class="col-md-4">
-        <h3>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
+        <h3>{{ viewDate | calendarDate : view + 'ViewTitle' : locale }}</h3>
       </div>
       <div class="col-md-4">
         <div class="btn-group">
@@ -45,7 +45,7 @@ import { CalendarView } from 'angular-calendar';
             (click)="viewChange.emit(CalendarView.Month)"
             [class.active]="view === CalendarView.Month"
           >
-            Month
+            Mes
           </div>
           <div
             class="btn btn-primary"
@@ -72,7 +72,7 @@ export class CalendarHeaderComponent {
 
   @Input() viewDate: Date;
 
-  @Input() locale: string = 'en';
+  @Input() locale: string = 'es';
 
   @Output() viewChange = new EventEmitter<CalendarView>();
 
